@@ -1,9 +1,6 @@
 #ifndef GENERACJA_H
 #define GENERACJA_H
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "komorka.h"
 
 typedef struct {

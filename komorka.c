@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "komorka.h"
 
 void zmien_stan(komorka_t *kom, stan_kom nowyst){

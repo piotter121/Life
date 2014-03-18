@@ -3,6 +3,6 @@
 
 #include "komorka.h"
 
-stan_kom jaki_stan(int i);
+stan_kom zasady(int sasiedzi, stan_kom poprzedni);
 
 #endif

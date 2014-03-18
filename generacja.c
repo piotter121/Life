@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "generacja.h"
 
 generacja_t *inicjuj_gen(int rows, int cols) {
@@ -30,6 +33,9 @@ generacja_t *wczytaj_z_pliku(FILE *in) {
 	return new;
 }
 
-generacja_t *nastepna_generacja(generacja_t *gen) {
+/* generacja_t *nastepna_generacja(generacja_t *gen) {
+	int i, j;
 	generacja_t *next = inicjuj_gen(gen->rows, gen->cols);
-	
+	for (i = 0; i < gen->rows; i++) {
+		for (j = 0; j < gen->cols; j++) {
+			*/

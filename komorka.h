@@ -1,8 +1,6 @@
 #ifndef KOMORKA_H
 #define KOMORKA_H
 
-#include <stdlib.h>
-
 typedef enum{MARTWA, ZYWA} stan_kom;
 
 typedef struct{
