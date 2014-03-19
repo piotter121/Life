@@ -5,10 +5,10 @@
 
 generacja_t *inicjuj_gen(int rows, int cols) {
 	int i, j;
-	generacja_t *new = malloc(sizeof *new);
+	generacja_t *new = (generacja_t *)malloc(sizeof *new);
 	if (new == NULL)
 		return NULL;
-	new->gen = malloc((rows*cols) * sizeof *(new->gen));
+	new->gen = (komorka_t *)malloc((rows*cols) * sizeof *(new->gen));
 	if (new->gen == NULL) {
 		free(new);
 		return NULL;
@@ -17,7 +17,7 @@ generacja_t *inicjuj_gen(int rows, int cols) {
 	new->cols = cols;
 	for (i = 0; i < rows; i++) 
 		for (j = 0; j < cols; j++)
-			new->gen[i * cols + j] = MARTWA;
+			zmien_stan(new->gen + i * cols + j, MARTWA);
 	return new;
 }
 
@@ -28,14 +28,19 @@ generacja_t *wczytaj_z_pliku(FILE *in) {
 		return NULL;
 	new = inicjuj_gen(m, n);
 	while (fscanf(in, "%d %d", &i, &j) == 2) {
-		new->gen[i*new->cols + j] = ZYWA;
+		if (i > 0 && i < m && j > 0 && j < n)
+			zmien_stan(new->gen + i * n + j, ZYWA);
 	}
 	return new;
 }
 
-/* generacja_t *nastepna_generacja(generacja_t *gen) {
+generacja_t *nastepna_generacja(generacja_t *gen) {
 	int i, j;
 	generacja_t *next = inicjuj_gen(gen->rows, gen->cols);
 	for (i = 0; i < gen->rows; i++) {
 		for (j = 0; j < gen->cols; j++) {
-			*/
+			zmien_stan(next->gen + i*next->cols + j, zasady(sasiedztwo(gen,i,j),stan(gen->gen + i*gen->cols + j)));
+		}
+	}
+	return next;
+}
