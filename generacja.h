@@ -15,6 +15,8 @@ generacja_t *inicjuj_gen(int rows, int cols);
 
 generacja_t *wczytaj_z_pliku(FILE *in);
 
-generacja_t *nastepna_generacja(generacja_t *gen);
+generacja_t *nastepna_generacja(generacja_t *siatka);
+
+void wypisz_gen(generacja_t *siatka);
 
 #endif

@@ -1,16 +1,25 @@
-CFLAGS=-Wall -ansi -pedantic
+FLAGS=-Wall -ansi -pedantic
 
-generacja.o: generacja.c generacja.h komorka.c komorka.h
-	$(CC) -c $(CFLAGS) generacja.c -o $@
+Life: generacja.o komorka.o sasiedztwo.o zasady.o zapis.o
+	$(CC) $(FLAGS) $^ 
+
+main.o: main.c 
+	$(CC) -c $(FLAGS) main.c -o $@
 	
-komorka.o: komorka.c komorka.h
-	$(CC) -c $(CFLAGS) komorka.c -o $@
+generacja.o: generacja.c komorka.c
+	$(CC) -c $(FLAGS) generacja.c -o $@
 	
-sasiedztwo.o: sasiedztwo.c sasiedztwo.h komorka.c komorka.h
-	$(CC) -c $(CFLAGS) sasiedztwo.c -o $@
+komorka.o: komorka.c
+	$(CC) -c $(FLAGS) komorka.c -o $@
 	
-zasady.o: zasady.c zasady.h komorka.c komorka.h
-	$(CC) -c $(CFLAGS) zasady.c -o $@
+sasiedztwo.o: sasiedztwo.c komorka.c
+	$(CC) -c $(FLAGS) sasiedztwo.c -o $@
+	
+zasady.o: zasady.c komorka.c
+	$(CC) -c $(FLAGS) zasady.c -o $@
+
+zapis.o: zapis.c
+	$(CC) -c $(FLAGS) zapis.c -o $@
 	
 .PHONY: clean
 
