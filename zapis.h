@@ -5,6 +5,6 @@
 #include "generacja.h"
 #include "komorka.h"
 
-void zapisz_txt(generacja_t *siatka, FILE *out);
+void zapisz_txt(generacja_t *siatka);
 
 #endif
