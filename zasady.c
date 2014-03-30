@@ -1,14 +1,14 @@
 #include "zasady.h"
 
-stan_kom zasady(int sasiedzi, stan_kom poprzedni) {
-	if (poprzedni == MARTWA && sasiedzi == 3) {
-		return ZYWA;
+cell_con rules(int neighbors, cell_con previous) {
+	if (previous == DEAD && neighbors == 3) {
+		return ALIVE;
 	} else 
-		if (poprzedni == ZYWA) { 
-			if (sasiedzi > 3 || sasiedzi < 2) 
-				return MARTWA;
+		if (previous == ALIVE) { 
+			if (neighbors > 3 || neighbors < 2) 
+				return DEAD;
 			else 
-				return ZYWA;
+				return ALIVE;
 		} else 
-			return MARTWA;
+			return DEAD;
 }

@@ -2,16 +2,16 @@
 
 #include "komorka.h"
 
-void zmien_stan(komorka_t *kom, stan_kom nowyst){
-	kom->stan = nowyst;
+void change_condition(cell_t *cell, cell_con new_condition){
+	cell->condition = new_condition;
 }
 
-komorka_t *inicjuj_kom(){
-	komorka_t *new = malloc(sizeof *new);
-	zmien_stan(new, MARTWA);
+cell_t *init_cell(){
+	cell_t *new = malloc(sizeof *new);
+	change_condition(new, DEAD);
 	return new;
 }
 
-stan_kom stan(komorka_t *kom) {
-	return kom->stan;
+cell_con condition(cell_t *cell) {
+	return cell->condition;
 }

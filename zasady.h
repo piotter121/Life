@@ -3,6 +3,6 @@
 
 #include "komorka.h"
 
-stan_kom zasady(int sasiedzi, stan_kom poprzedni);
+cell_con rules(int neighbors, cell_con previous);
 
 #endif

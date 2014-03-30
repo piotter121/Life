@@ -4,6 +4,6 @@
 #include "generacja.h"
 #include "komorka.h"
 
-int sasiedztwo(generacja_t *gen, int i, int j);
+int neighbourhood(generation_t *net, int i, int j);
 
 #endif

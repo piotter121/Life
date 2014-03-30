@@ -3,12 +3,12 @@
 
 #include "generacja.h"
 
-generacja_t *inicjuj_gen(int rows, int cols) {
+generation_t *init_gen(int rows, int cols) {
 	int i, j;
-	generacja_t *new = (generacja_t *)malloc(sizeof *new);
+	generation_t *new = (generation_t *)malloc(sizeof *new);
 	if (new == NULL)
 		return NULL;
-	new->gen = (komorka_t *)malloc((rows*cols) * sizeof *(new->gen));
+	new->gen = (cell_t *)malloc((rows*cols) * sizeof *(new->gen));
 	if (new->gen == NULL) {
 		free(new);
 		return NULL;
@@ -17,41 +17,46 @@ generacja_t *inicjuj_gen(int rows, int cols) {
 	new->cols = cols;
 	for (i = 0; i < rows; i++) 
 		for (j = 0; j < cols; j++)
-			zmien_stan(new->gen + i * cols + j, MARTWA);
+			change_condition(cell(new,i,j), DEAD);
 	return new;
 }
 
-generacja_t *wczytaj_z_pliku(FILE *in) {
+cell_t *cell(generation_t *net, int i, int j) {
+	if ((i >= 0 && i < net->rows) && (j >= 0 && j < net->cols))
+		return net->gen + i*net->cols + j;
+}
+
+generation_t *load_from_file(FILE *in) {
 	int m, n, i, j;
-	generacja_t *new;
+	generation_t *new;
 	if (fscanf(in, "%d %d", &m, &n) != 2) 
 		return NULL;
-	new = inicjuj_gen(m, n);
+	new = init_gen(m, n);
 	while (fscanf(in, "%d %d", &i, &j) == 2) {
 		if (i > 0 && i < m && j > 0 && j < n)
-			zmien_stan(new->gen + i * n + j, ZYWA);
+			change_condition(cell(new,i,j), ALIVE);
 	}
 	return new;
 }
 
-generacja_t *nastepna_generacja(generacja_t *siatka) {
+generation_t *next_generation(generation_t *net) {
 	int i, j;
-	generacja_t *next = inicjuj_gen(gen->rows, gen->cols);
+	generation_t *next = init_gen(gen->rows, gen->cols);
 	for (i = 0; i < gen->rows; i++) {
 		for (j = 0; j < gen->cols; j++) {
-			zmien_stan(next->gen + i*next->cols + j, zasady(sasiedztwo(gen,i,j),stan(siatka->gen + i*siatka->cols + j)));
+			change_condition(cell(next,i,j),zasady(sasiedztwo(gen,i,j),condition(cell(net,i,j)));
 		}
 	}
 	return next;
 }
 
-void wypisz_gen(generacja_t *siatka) {
+void write_stdout(generation_t *net) {
 	int i, j;
-	if (siatka == NULL)
+	if (net == NULL)
 		return;
-	for (i = 0; i < siatka->rows; i++) {
-		for (j = 0; j < siatka->cols; j++) {
-			if (stan(siatka->gen + i*siatka->cols + j) == ZYWA)
+	for (i = 0; i < net->rows; i++) {
+		for (j = 0; j < net->cols; j++) {
+			if (condition(cell(net,i,j)) == ALIVE)
 				printf("%d",1);
 			else
 				printf("%d",0);

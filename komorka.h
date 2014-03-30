@@ -1,16 +1,16 @@
 #ifndef KOMORKA_H
 #define KOMORKA_H
 
-typedef enum{MARTWA, ZYWA} stan_kom;
+typedef enum{DEAD, ALIVE} cell_con;
 
 typedef struct{
-	stan_kom stan;
-} komorka_t;
+	cell_con condition;
+} cell_t;
 
-void zmien_stan(komorka_t *kom, stan_kom nowy_stan);
+void change_condition(cell_t *cell, cell_con new_condition);
 
-komorka_t *inicjuj_kom();
+cell_t *init_cell();
 
-stan_kom stan(komorka_t *kom);
+cell_con condition(cell_t *cell);
 
 #endif

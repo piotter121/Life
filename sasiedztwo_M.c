@@ -1,16 +1,16 @@
 #include "sasiedztwo.h"
 
-int sasiedztwo(generacja_t *siatka, int i, int j) {
-	int a, b, wynik = 0;
+int neighbourhood(generation_t *net, int i, int j) {
+	int a, b, result = 0;
 	for (a = i - 1; a <= i + 1; a++) {
-		if (a < 0 || a >= siatka->rows)
+		if (a < 0 || a >= net->rows)
 			continue;
 		for (b = j - 1; b <= j + 1; b++) {
-			if ((a == i && b == j) || b < 0 || b >= siatka->cols)
+			if ((a == i && b == j) || b < 0 || b >= net->cols)
 				continue;
-			if (stan(siatka->gen + a*siatka->cols + b) == ZYWA)
-				wynik++;
+			if (condition(cell(net,a,b)) == ALIVE)
+				result++;
 		}
 	}
-	return wynik;
+	return result;
 }

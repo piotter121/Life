@@ -6,17 +6,21 @@
 #include "komorka.h"
 
 typedef struct {
-	komorka_t *gen;
+	cell_t *gen;
 	int rows;
 	int cols;
-} generacja_t;
+} generation_t;
 
-generacja_t *inicjuj_gen(int rows, int cols);
+generation_t *init_gen(int rows, int cols);
 
-generacja_t *wczytaj_z_pliku(FILE *in);
+generation_t *load_from_file(FILE *in);
 
-generacja_t *nastepna_generacja(generacja_t *siatka);
+generation_t *next_generation(generation_t *current);
 
-void wypisz_gen(generacja_t *siatka);
+void write_stdout(generation_t *gen);
+
+generation_t *copy(generation_t *gen);
+
+cell_t *cell(generation_t *net, int i, int j);
 
 #endif
