@@ -64,3 +64,8 @@ void write_stdout(generation_t *net) {
 		printf("\n");
 	}
 }		
+
+void free_gen(generation_t *net) {
+	free(net->gen);
+	free(net);
+}

@@ -3,18 +3,18 @@
 #include <getopt.h>
 #include <string.h>
 
-#include "genracja.h"
+#include "generacja.h"
 #include "komorka.h"
 #include "zapis.h"
 
 int main(int argc, char **argv) {
 	int a = 1, opt, n, f, last_to_txt = 0;
 	char *gen_zero;
-	char *png_wzor;
-	char *nazwa_png;
-	char *uzycie = "Niepoprawne wywolanie programu\n";
+	char *png_pattern;
+	char *png_title;
+	char *usage = "Niepoprawne wywolanie programu\n";
 	FILE *in = NULL;
-	generacja_t *bierzaca, *nowa, *tmp;
+	generation_t *current, *new, *tmp;
 	if (argc == 1) {
 		puts(usage);
 		return EXIT_FAILURE;
@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
 				gen_zero = strdup(optarg);
 				break;
 			case 's':
-				png_wzor = strdup(optarg);
+				png_pattern = strdup(optarg);
 				break;
 			case 'f':
 				f = atoi(optarg);
@@ -46,26 +46,31 @@ int main(int argc, char **argv) {
 		fprintf(stderr, "Blad: program nie moze odczytac pliku pierwszej generacji\n");
 		return EXIT_FAILURE;
 	}
-	bierzaca = wczytaj_z_pliku(in);
+	current = load_from_file(in);
 	fclose(in);
-	nazwa_png = strdup(png_wzor);
-	strcat(nazwa_png, "0.png");
-	zapisz_png(bierzaca, nazwa_png);
+	png_title = strdup(png_pattern);
+	strcat(png_title, "0.png");
+	/* save_to_png(current, png_title); */
+	write_stdout(current);
 	while (a <= n) {
-		if ((nowa = nastepna_generacja(bierzaca)) == NULL) {
+		if ((new = next_generation(current)) == NULL) {
 			fprintf(stderr, "Nie powiodlo sie przejscie do kolejnej generacji\n");
 			exit(EXIT_FAILURE);
 		}
 		if (a <= f) {
-			nazwa_png = strdup(png_wzor);
-			strcat(nazwa_png,"%d.png", a);
-			zapisz_png(nowa, nazwa_png);
+			png_title = strdup(png_pattern);
+			strcat(png_title,"%d.png",a);
+			/* save_to_png(new, png_title); */
+			write_stdout(new);
 		}
 		if (a == n && last_to_txt == 1) 
-			zapisz_txt(nowa, txt_wzor);
-		tmp = bierzaca;
-		bierzaca = nowa;
-		nowa = tmp;
+			save_to_txt(new,txt_wzor);
+		tmp = current;
+		current = new;
+		new = tmp;
+		a++;
 	}
-	free_gen(bierzaca
+	free_gen(current);
+	free_gen(new);
 	exit(EXIT_SUCCESS);	
+}

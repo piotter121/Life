@@ -23,4 +23,6 @@ generation_t *copy(generation_t *gen);
 
 cell_t *cell(generation_t *net, int i, int j);
 
+void free_gen(generation_t *net);
+
 #endif
