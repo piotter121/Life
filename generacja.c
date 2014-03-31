@@ -33,8 +33,8 @@ generation_t *load_from_file(FILE *in) {
 		return NULL;
 	new = init_gen(m, n);
 	while (fscanf(in, "%d %d", &i, &j) == 2) {
-		if (i > 0 && i < m && j > 0 && j < n)
-			change_condition(cell(new,i,j), ALIVE);
+		if (i > 0 && i <= m && j > 0 && j <= n)
+			change_condition(cell(new, i - 1, j - 1), ALIVE);
 	}
 	return new;
 }
