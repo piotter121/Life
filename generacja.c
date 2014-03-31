@@ -57,12 +57,13 @@ void write_stdout(generation_t *net) {
 	for (i = 0; i < net->rows; i++) {
 		for (j = 0; j < net->cols; j++) {
 			if (condition(cell(net,i,j)) == ALIVE)
-				printf("%d",1);
+				printf("%d ",1);
 			else
-				printf("%d",0);
+				printf("   ");
 		}
 		printf("\n");
 	}
+	printf("\n");
 }		
 
 void free_gen(generation_t *net) {

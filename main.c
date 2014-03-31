@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
 		puts(usage);
 		return EXIT_FAILURE;
 	}
-	while ((opt = getopt(argc, argv, "n:l:s:f:w")) != -1) {
+	while ((opt = getopt(argc, argv, "n:l:s:f:w:")) != -1) {
 		switch (opt) {
 			case 'n': 
 				n = atoi(optarg);
