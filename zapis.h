@@ -5,6 +5,6 @@
 #include "generacja.h"
 #include "komorka.h"
 
-void save_to_txt(generation_t *net);
+void save_to_txt(generation_t *net, char *txt_pattern);
 
 #endif

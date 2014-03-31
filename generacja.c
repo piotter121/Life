@@ -41,10 +41,10 @@ generation_t *load_from_file(FILE *in) {
 
 generation_t *next_generation(generation_t *net) {
 	int i, j;
-	generation_t *next = init_gen(gen->rows, gen->cols);
-	for (i = 0; i < gen->rows; i++) {
-		for (j = 0; j < gen->cols; j++) {
-			change_condition(cell(next,i,j),zasady(sasiedztwo(gen,i,j),condition(cell(net,i,j)));
+	generation_t *next = init_gen(net->rows, net->cols);
+	for (i = 0; i < net->rows; i++) {
+		for (j = 0; j < net->cols; j++) {
+			change_condition(cell(next,i,j),rules(neighbourhood(net,i,j),condition(cell(net,i,j))));
 		}
 	}
 	return next;

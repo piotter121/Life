@@ -1,4 +1,4 @@
-#inlcude "zapis.h"
+#include "zapis.h"
 
 void save_to_txt(generation_t *net, char *file_name) {
 	int i, j;

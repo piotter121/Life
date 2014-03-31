@@ -12,6 +12,7 @@ int main(int argc, char **argv) {
 	char *gen_zero;
 	char *png_pattern;
 	char *png_title;
+	char *txt_pattern;
 	char *usage = "Niepoprawne wywolanie programu\n";
 	FILE *in = NULL;
 	generation_t *current, *new, *tmp;
@@ -36,9 +37,7 @@ int main(int argc, char **argv) {
 				break;
 			case 'w':
 				last_to_txt = 1;
-				txt_wzor = strdup(optarg);
-				break;
-			case default:
+				txt_pattern = strdup(optarg);
 				break;
 		}
 	}
@@ -59,12 +58,12 @@ int main(int argc, char **argv) {
 		}
 		if (a <= f) {
 			png_title = strdup(png_pattern);
-			strcat(png_title,"%d.png",a);
+			/* strcat(png_title,"%d.png",a); */
 			/* save_to_png(new, png_title); */
 			write_stdout(new);
 		}
 		if (a == n && last_to_txt == 1) 
-			save_to_txt(new,txt_wzor);
+			save_to_txt(new,txt_pattern);
 		tmp = current;
 		current = new;
 		new = tmp;
