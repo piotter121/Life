@@ -15,7 +15,7 @@ generation_t *init_gen(int rows, int cols);
 
 generation_t *load_from_file(FILE *in);
 
-generation_t *next_generation(generation_t *current);
+generation_t *next_generation(generation_t *current, int (*neighbourhood)(generation_t *, int, int));
 
 void write_stdout(generation_t *gen);
 

@@ -7,4 +7,6 @@
 
 void save_to_txt(generation_t *net, char *txt_pattern);
 
+void save_to_png(generation_t *net, char *png_pattern);
+
 #endif

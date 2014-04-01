@@ -1,6 +1,6 @@
 #include "sasiedztwo.h"
 
-int neighbourhood(generation_t *net, int i, int j) {
+int Moore_ngbh(generation_t *net, int i, int j) {
 	int a, b, result = 0;
 	for (a = i - 1; a <= i + 1; a++) {
 		if (a < 0 || a >= net->rows)
@@ -13,4 +13,8 @@ int neighbourhood(generation_t *net, int i, int j) {
 		}
 	}
 	return result;
+}
+
+int vN_ngbh(generation_t *net, int i, int j) {
+	return 0;
 }

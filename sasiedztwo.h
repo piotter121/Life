@@ -4,6 +4,8 @@
 #include "generacja.h"
 #include "komorka.h"
 
-int neighbourhood(generation_t *net, int i, int j);
+int Moore_ngbh(generation_t *net, int i, int j);
+
+int vN_ngbh(generation_t *net, int i, int j);
 
 #endif

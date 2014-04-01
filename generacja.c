@@ -39,7 +39,7 @@ generation_t *load_from_file(FILE *in) {
 	return new;
 }
 
-generation_t *next_generation(generation_t *net) {
+generation_t *next_generation(generation_t *net, int (*neighbourhood)(generation_t *, int, int)) {
 	int i, j;
 	generation_t *next = init_gen(net->rows, net->cols);
 	for (i = 0; i < net->rows; i++) {

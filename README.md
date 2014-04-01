@@ -1,1 +1,1 @@
-Program ma za zadanie symulowaæ automat komórkowy wed³ug gry w ¿ycie Johna Conwaya.
+Program ma za zadanie symulowac automat komorkowy wedlug gry w zycie Johna Conwaya.
