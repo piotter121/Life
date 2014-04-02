@@ -5,16 +5,7 @@
 #include <stdarg.h>
 #include <png.h>
 
-int x, y;
 
-int width, height;
-png_byte color_type;
-png_byte bit_depth;
-
-png_structp png_ptr;
-png_infop info_ptr;
-int number_of_passes;
-png_bytep * row_pointers;
 
 
 #include "zapis.h"
@@ -28,15 +19,22 @@ void save_to_txt(generation_t *net, char *file_name) {
 	}
 	fprintf(out, "%d %d\n", net->rows, net->cols);
 	for (i = 0; i < net->rows; i++) {
-		for (j = 0; net->cols; j++) {
-			if (condition(cell(net,i,j)) == ALIVE) {
+		for (j = 0; j < net->cols; j++) {
+			if ((condition(cell(net,i,j))) == ALIVE)
 				fprintf(out, "%d %d\n", i + 1, j + 1);
-			}
 		}
 	}
 }
 
 void save_to_png(generation_t *net, char *file_name) {
+	int x, y;
+	int width, height;
+	png_byte color_type;
+	png_byte bit_depth;
+	png_structp png_ptr;
+	png_infop info_ptr;
+	int number_of_passes;
+	png_bytep * row_pointers;
 	width = net->cols;
 	height = net->rows;
 	bit_depth = 8;
@@ -53,7 +51,6 @@ void save_to_png(generation_t *net, char *file_name) {
 				row[x] = 255;
 			else
 				row[x] = 0;
-			/* printf("Pixel at position [ %d - %d ] has RGBA values: %d\n", x, y, row[x]);*/
 		}
 	}
 
