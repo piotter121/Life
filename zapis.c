@@ -27,14 +27,14 @@ void save_to_txt(generation_t *net, char *file_name) {
 }
 
 void save_to_png(generation_t *net, char *file_name) {
-	int x, y;
+	int x, y; 
 	int width, height;
 	png_byte color_type;
 	png_byte bit_depth;
 	png_structp png_ptr;
 	png_infop info_ptr;
 	int number_of_passes;
-	png_bytep * row_pointers;
+	png_bytep *row_pointers;
 	width = net->cols;
 	height = net->rows;
 	bit_depth = 8;
@@ -44,16 +44,17 @@ void save_to_png(generation_t *net, char *file_name) {
 	for (y=0; y<height; y++)
 		row_pointers[y] = (png_byte*) malloc(sizeof(png_byte) * width);
 
-	for (y=0; y<height; y++) {
+	for (y = 0; y < height; y++) {
 		png_byte* row = row_pointers[y];
-		for (x=0; x<width; x++) {
-			if(condition(cell(net, y, x)) == ALIVE) 
+		for (x = 0; x < width; x++) {
+			if(condition(cell(net, y, x)) == ALIVE) { 
 				row[x] = 255;
-			else
+			} else {
 				row[x] = 0;
+			}
 		}
 	}
-
+	/* zapis struktury do pliku */
 	FILE *fp = fopen(file_name, "wb");
 	if (!fp)
 		printf("[write_png_file] Plik %s nie moze byc otwarty do zapisu\n", file_name);
