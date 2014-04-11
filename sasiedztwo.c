@@ -23,7 +23,7 @@ int vN_ngbh(generation_t *net, int i, int j) {
 		for (b = j - 1; b <= j + 1; b++) {
 			if ((a == i && b == j) || b < 0 || b >= net->cols)
 				continue;
-			if (condition(cell(net,a,b)) == ALIVE)
+			if ((a == i || b == j) && (condition(cell(net,a,b)) == ALIVE))
 				result++;
 		}
 	}
