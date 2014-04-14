@@ -5,9 +5,6 @@
 #include <stdarg.h>
 #include <png.h>
 
-
-
-
 #include "zapis.h"
 
 void save_to_txt(generation_t *net, char *file_name) {
@@ -27,7 +24,7 @@ void save_to_txt(generation_t *net, char *file_name) {
 }
 
 void save_to_png(generation_t *net, char *file_name) {
-	int x, y; 
+	int x, y;
 	int width, height;
 	png_byte color_type;
 	png_byte bit_depth;
@@ -35,8 +32,8 @@ void save_to_png(generation_t *net, char *file_name) {
 	png_infop info_ptr;
 	int number_of_passes;
 	png_bytep *row_pointers;
-	width = net->cols;
-	height = net->rows;
+	width = 3 * net->cols;
+	height = 3 * net->rows;
 	bit_depth = 8;
 	color_type = PNG_COLOR_TYPE_GRAY;
 	number_of_passes = 7;
@@ -44,13 +41,31 @@ void save_to_png(generation_t *net, char *file_name) {
 	for (y=0; y<height; y++)
 		row_pointers[y] = (png_byte*) malloc(sizeof(png_byte) * width);
 
-	for (y = 0; y < height; y++) {
+	for (y = 0; y < height; y+=3) {
 		png_byte* row = row_pointers[y];
-		for (x = 0; x < width; x++) {
-			if(condition(cell(net, y, x)) == ALIVE) { 
+		png_byte* row2 = row_pointers[y+1];
+		png_byte* row3 = row_pointers[y+2];
+		for (x = 0; x < width; x+=3) {
+			if(condition(cell(net, y/3, x/3)) == ALIVE) { 
 				row[x] = 255;
+				row[x+1] = 255;
+				row[x+2] = 255;
+				row2[x] = 255;
+				row2[x+1] = 255;
+				row2[x+2] = 255;
+				row3[x] = 255;
+				row3[x+1] = 255;
+				row3[x+2] = 255;
 			} else {
 				row[x] = 0;
+				row[x+1] = 0;
+				row[x+2] = 0;
+				row2[x] = 0;
+				row2[x+1] =0;
+				row2[x+2] = 0;
+				row3[x] = 0;
+				row3[x+1] = 0;
+				row3[x+2] = 0;
 			}
 		}
 	}
