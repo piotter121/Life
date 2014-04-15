@@ -24,53 +24,41 @@ void save_to_txt(generation_t *net, char *file_name) {
 }
 
 void save_to_png(generation_t *net, char *file_name) {
-	int x, y;
+	int x, y, i;
 	int width, height;
+	FILE *fp = NULL;
 	png_byte color_type;
 	png_byte bit_depth;
 	png_structp png_ptr;
 	png_infop info_ptr;
-	int number_of_passes;
 	png_bytep *row_pointers;
 	width = 3 * net->cols;
 	height = 3 * net->rows;
 	bit_depth = 8;
 	color_type = PNG_COLOR_TYPE_GRAY;
-	number_of_passes = 7;
 	row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * height);
 	for (y=0; y<height; y++)
 		row_pointers[y] = (png_byte*) malloc(sizeof(png_byte) * width);
 
 	for (y = 0; y < height; y+=3) {
-		png_byte* row = row_pointers[y];
-		png_byte* row2 = row_pointers[y+1];
-		png_byte* row3 = row_pointers[y+2];
 		for (x = 0; x < width; x+=3) {
 			if(condition(cell(net, y/3, x/3)) == ALIVE) { 
-				row[x] = 255;
-				row[x+1] = 255;
-				row[x+2] = 255;
-				row2[x] = 255;
-				row2[x+1] = 255;
-				row2[x+2] = 255;
-				row3[x] = 255;
-				row3[x+1] = 255;
-				row3[x+2] = 255;
+				for (i = 0; i < 3; i++) {
+					row_pointers[y][x + i] = 255;
+					row_pointers[y + 1][x + i] = 255;
+					row_pointers[y + 2][x + i] = 255;
+				}
 			} else {
-				row[x] = 0;
-				row[x+1] = 0;
-				row[x+2] = 0;
-				row2[x] = 0;
-				row2[x+1] =0;
-				row2[x+2] = 0;
-				row3[x] = 0;
-				row3[x+1] = 0;
-				row3[x+2] = 0;
+				for (i = 0; i < 3; i++) {
+					row_pointers[y][x + i] = 0;
+					row_pointers[y + 1][x + i] = 0;
+					row_pointers[y + 2][x + i] = 0;
+				}
 			}
 		}
 	}
 	/* zapis struktury do pliku */
-	FILE *fp = fopen(file_name, "wb");
+	fp = fopen(file_name, "wb");
 	if (!fp)
 		printf("[write_png_file] Plik %s nie moze byc otwarty do zapisu\n", file_name);
 

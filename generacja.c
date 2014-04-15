@@ -24,6 +24,7 @@ generation_t *init_gen(int rows, int cols) {
 cell_t *cell(generation_t *net, int i, int j) {
 	if ((i >= 0 && i < net->rows) && (j >= 0 && j < net->cols))
 		return net->gen + i*net->cols + j;
+	return NULL;
 }
 
 generation_t *load_from_file(FILE *in) {

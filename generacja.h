@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include "komorka.h"
+#include "zasady.h"
 
 typedef struct {
 	cell_t *gen;

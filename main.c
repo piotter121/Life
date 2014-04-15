@@ -19,12 +19,12 @@ int main(int argc, char **argv) {
 	const char *usage = "Niepoprawne wywolanie programu\n";
 	FILE *in = NULL;
 	int (*neighbourhood)(generation_t *, int, int) = Moore_ngbh;
-	generation_t *current, *new, *tmp;
+	generation_t *current, *new;
 	if (argc == 1) {
 		puts(usage);
 		return EXIT_FAILURE;
 	}
-	while ((opt = getopt(argc, argv, "n:l:s:f:w:o:")) != -1) {
+	while ((opt = getopt(argc, argv, "n:l:s:f:w:o")) != -1) {
 		switch (opt) {
 			case 'n': 
 				n = atoi(optarg);
@@ -51,19 +51,15 @@ int main(int argc, char **argv) {
 				puts(usage);
 				exit(EXIT_FAILURE);
 		}
-		/*printf("pętla wczytujaca\n");*/
 	}
 	if (gen_zero == NULL || ((in = fopen(gen_zero, "r")) == NULL)) {
 		fprintf(stderr, "%s: program nie moze odczytac pliku pierwszej generacji\n", argv[0]);
 		return EXIT_FAILURE;
 	}
 	current = load_from_file(in);
-	/*printf("po wczytaniu z pliku 0\n");*/
 	strcpy(png_title, png_pattern);
 	strcat(png_title, "0.png");
 	save_to_png(current, png_title); 
-	/*write_stdout(current);*/
-	/*printf("doszlo do głownej petli\n");*/
 	for (a = 1; a <= n; a++) {
 		strcpy(png_title, png_pattern);
 		if ((new = next_generation(current,neighbourhood)) == NULL) {
@@ -75,16 +71,11 @@ int main(int argc, char **argv) {
 			strcat(png_title, number);
 			strcat(png_title, format);
 			save_to_png(new, png_title); 
-			/*write_stdout(new);*/
 		}
 		if (a == n && last_to_txt == 1) 
 			save_to_txt(new,txt_pattern);
-		tmp = current;
+		free_gen(current);
 		current = new;
-		new = tmp;
-		/*printf("wewnatrz petli gl\n");*/
 	}
-	free_gen(current);
-	free_gen(new);
 	exit(EXIT_SUCCESS);	
 }
