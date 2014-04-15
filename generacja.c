@@ -51,22 +51,6 @@ generation_t *next_generation(generation_t *net, int (*neighbourhood)(generation
 	return next;
 }
 
-void write_stdout(generation_t *net) {
-	int i, j;
-	if (net == NULL)
-		return;
-	for (i = 0; i < net->rows; i++) {
-		for (j = 0; j < net->cols; j++) {
-			if (condition(cell(net,i,j)) == ALIVE)
-				printf("%d ",1);
-			else
-				printf("   ");
-		}
-		printf("\n");
-	}
-	printf("\n");
-}		
-
 void free_gen(generation_t *net) {
 	free(net->gen);
 	free(net);

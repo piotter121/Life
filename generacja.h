@@ -18,8 +18,6 @@ generation_t *load_from_file(FILE *in);
 
 generation_t *next_generation(generation_t *current, int (*neighbourhood)(generation_t *, int, int));
 
-void write_stdout(generation_t *gen);
-
 generation_t *copy(generation_t *gen);
 
 cell_t *cell(generation_t *net, int i, int j);
