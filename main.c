@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <getopt.h>
 #include <string.h>
+#define _POSIX_SOURCE
+#include <sys/stat.h>
+#include <unistd.h>
+#undef _POSIX_SOURCE
 
 #include "generacja.h"
 #include "komorka.h"
@@ -17,6 +21,7 @@ int main(int argc, char **argv) {
 	const char *format = ".png";
 	char *txt_pattern;
 	const char *usage = "Niepoprawne wywolanie programu\n";
+	const char *new_dir = "created_files";
 	FILE *in = NULL;
 	int (*neighbourhood)(generation_t *, int, int) = Moore_ngbh;
 	generation_t *current, *new;
@@ -57,6 +62,13 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 	current = load_from_file(in);
+	if (mkdir(new_dir, S_IRWXU|S_IRGRP|S_IXGRP) != 0) {
+		perror("blad: nie mozna utworzyc folderu\n");
+		exit(1);
+	} else if (chdir(new_dir) != 0) {
+		perror("blad: Nie mozna otworzyc katalogu do zapisu\n");
+		exit(2);
+	}
 	strcpy(png_title, png_pattern);
 	strcat(png_title, "0.png");
 	save_to_png(current, png_title); 
@@ -77,5 +89,6 @@ int main(int argc, char **argv) {
 		free_gen(current);
 		current = new;
 	}
+	chdir("..");
 	exit(EXIT_SUCCESS);	
 }

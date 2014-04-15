@@ -24,7 +24,7 @@ void save_to_txt(generation_t *net, char *file_name) {
 }
 
 void save_to_png(generation_t *net, char *file_name) {
-	int x, y, i;
+	int x, y, i, j;
 	int width, height;
 	FILE *fp = NULL;
 	png_byte color_type;
@@ -32,27 +32,25 @@ void save_to_png(generation_t *net, char *file_name) {
 	png_structp png_ptr;
 	png_infop info_ptr;
 	png_bytep *row_pointers;
-	width = 3 * net->cols;
-	height = 3 * net->rows;
+	width = 8 * net->cols;
+	height = 8 * net->rows;
 	bit_depth = 8;
 	color_type = PNG_COLOR_TYPE_GRAY;
 	row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * height);
 	for (y=0; y<height; y++)
 		row_pointers[y] = (png_byte*) malloc(sizeof(png_byte) * width);
 
-	for (y = 0; y < height; y+=3) {
-		for (x = 0; x < width; x+=3) {
-			if(condition(cell(net, y/3, x/3)) == ALIVE) { 
-				for (i = 0; i < 3; i++) {
-					row_pointers[y][x + i] = 255;
-					row_pointers[y + 1][x + i] = 255;
-					row_pointers[y + 2][x + i] = 255;
+	for (y = 0; y < height; y+=8) {
+		for (x = 0; x < width; x+=8) {
+			if(condition(cell(net, y/8, x/8)) == ALIVE) { 
+				for (i = 0; i < 8; i++) {
+					for (j = 0; j < 8; j++)
+						row_pointers[y + j][x + i] = 255;
 				}
 			} else {
-				for (i = 0; i < 3; i++) {
-					row_pointers[y][x + i] = 0;
-					row_pointers[y + 1][x + i] = 0;
-					row_pointers[y + 2][x + i] = 0;
+				for (i = 0; i < 8; i++) {
+					for (j = 0; j < 8; j++)
+						row_pointers[y + j][x + i] = 0;
 				}
 			}
 		}
