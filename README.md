@@ -1,3 +1,3 @@
 https://github.com/piotter121/Life
-Program ma za zadanie symulowac automat komorkowy wedlug gry w zycie Johna Conwaya.
+Program ma za zadanie symulować automat komórkowy według gry w życie Johna Conway'a.
 @author Piotr Pyśk
