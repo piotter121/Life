@@ -21,7 +21,14 @@ zasady.o: zasady.c
 zapis.o: zapis.c 
 	$(CC) $(CFLAGS) -c $^
 	
-.PHONY: clean
+.PHONY: clean test
 
 clean: 
 	rm *.o
+
+test:
+	./Life -n 100 -l ./test/glider_gun -s glider_gun
+	./Life -n 100 -l ./test/glider -s glider -w ostatni_glider.txt
+	./Life -n 100 -l ./test/dakota -s dakota
+	./Life -n 100 -l ./test/test -s test -o
+	./Life -n 1000 -l ./test/immortal -f 300 -s immortal -w immortal_last

@@ -65,14 +65,16 @@ int main(int argc, char **argv) {
 	current = load_from_file(in);
 	if (mkdir(new_dir, S_IRWXU|S_IRGRP|S_IXGRP) != 0) {
 		if (errno == EEXIST) {
-			;
+			if (chdir(new_dir) != 0) {
+				perror("error");
+				exit(2);
+			}
 		} else {
-			perror("blad: nie mozna utworzyc folderu\n");
+			perror("error");
 			exit(1);
 		}
-	}
-	if (chdir(new_dir) != 0) {
-		perror("blad: Nie mozna otworzyc katalogu do zapisu\n");
+	} else if (chdir(new_dir) != 0) {
+		perror("error");
 		exit(2);
 	}
 	strcpy(png_title, png_pattern);
