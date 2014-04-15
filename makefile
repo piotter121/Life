@@ -1,7 +1,7 @@
 CFLAGS= -Wall -ansi -pedantic -ggdb
 
 Life: generacja.o komorka.o sasiedztwo.o zasady.o main.o zapis.o
-	$(CC) $^ -o Life -lpng
+	$(CC) $^ -o $@ -lpng
 
 main.o: main.c
 	$(CC) $(CFLAGS) -c $^

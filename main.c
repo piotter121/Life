@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <getopt.h>
 #include <string.h>
+#include <errno.h>
 #define _POSIX_SOURCE
 #include <sys/stat.h>
 #include <unistd.h>
@@ -63,9 +64,14 @@ int main(int argc, char **argv) {
 	}
 	current = load_from_file(in);
 	if (mkdir(new_dir, S_IRWXU|S_IRGRP|S_IXGRP) != 0) {
-		perror("blad: nie mozna utworzyc folderu\n");
-		exit(1);
-	} else if (chdir(new_dir) != 0) {
+		if (errno == EEXIST) {
+			;
+		} else {
+			perror("blad: nie mozna utworzyc folderu\n");
+			exit(1);
+		}
+	}
+	if (chdir(new_dir) != 0) {
 		perror("blad: Nie mozna otworzyc katalogu do zapisu\n");
 		exit(2);
 	}
