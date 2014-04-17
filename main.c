@@ -67,15 +67,12 @@ int main(int argc, char **argv) {
 		if (errno == EEXIST) {
 			if (chdir(new_dir) != 0) {
 				perror("error");
-				exit(2);
 			}
 		} else {
 			perror("error");
-			exit(1);
 		}
 	} else if (chdir(new_dir) != 0) {
 		perror("error");
-		exit(2);
 	}
 	strcpy(png_title, png_pattern);
 	strcat(png_title, "0.png");
@@ -97,6 +94,7 @@ int main(int argc, char **argv) {
 		free_gen(current);
 		current = new;
 	}
-	chdir("..");
+	if (chdir("..") != 0) 
+		perror("error");
 	exit(EXIT_SUCCESS);	
 }
