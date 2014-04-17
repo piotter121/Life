@@ -13,6 +13,15 @@
 #include "zapis.h"
 #include "sasiedztwo.h"
 
+const char *usage = "Usage: \n"
+		    "./Life -n N -l path [-s prefix] [-o] [-w file_name] [-f F]\n"
+		    "\tN - the number of generations\n"
+		    "\tpath - path to the file with data about generation zero\n"
+		    "\tprefix - prefix of the png files\n"
+		    "\t-o - switch on von Neumann neighbourhood\n"
+		    "\tfile_name - the name of the file which will have data about last generation\n"
+		    "\tF - the number of generations which will be written to png files\n";
+
 int main(int argc, char **argv) {
 	int a, opt, n, f, last_to_txt = 0;
 	char *gen_zero;
@@ -21,12 +30,11 @@ int main(int argc, char **argv) {
 	char number[10];
 	const char *format = ".png";
 	char *txt_pattern;
-	const char *usage = "Niepoprawne wywolanie programu\n";
 	const char *new_dir = "created_files";
 	FILE *in = NULL;
 	int (*neighbourhood)(generation_t *, int, int) = Moore_ngbh;
 	generation_t *current, *new;
-	if (argc == 1) {
+	if (argc < 5) {
 		puts(usage);
 		return EXIT_FAILURE;
 	}
