@@ -91,6 +91,8 @@ void save_to_png(generation_t *net, char *file_name) {
 
 	png_write_end(png_ptr, NULL);
 
+	png_destroy_write_struct(&png_ptr, &info_ptr);
+
 	for (y=0; y<height; y++)
 		free(row_pointers[y]);
 	free(row_pointers);
