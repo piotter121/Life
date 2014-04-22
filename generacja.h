@@ -18,8 +18,6 @@ generation_t *load_from_file(FILE *in);
 
 void next_generation(generation_t *current, generation_t *next, int (*neighbourhood)(generation_t *, int, int));
 
-generation_t *copy(generation_t *gen);
-
 cell_t *cell(generation_t *net, int i, int j);
 
 void free_gen(generation_t *net);
