@@ -40,15 +40,13 @@ generation_t *load_from_file(FILE *in) {
 	return new;
 }
 
-generation_t *next_generation(generation_t *net, int (*neighbourhood)(generation_t *, int, int)) {
+void next_generation(generation_t *current, generation_t *next, int (*neighbourhood)(generation_t *, int, int)) {
 	int i, j;
-	generation_t *next = init_gen(net->rows, net->cols);
-	for (i = 0; i < net->rows; i++) {
-		for (j = 0; j < net->cols; j++) {
-			change_condition(cell(next,i,j),rules(neighbourhood(net,i,j),condition(cell(net,i,j))));
+	for (i = 0; i < current->rows; i++) {
+		for (j = 0; j < current->cols; j++) {
+			change_condition(cell(next, i, j), rules(neighbourhood(current, i, j), condition(cell(current, i, j))));
 		}
 	}
-	return next;
 }
 
 void free_gen(generation_t *net) {

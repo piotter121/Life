@@ -16,7 +16,7 @@ generation_t *init_gen(int rows, int cols);
 
 generation_t *load_from_file(FILE *in);
 
-generation_t *next_generation(generation_t *current, int (*neighbourhood)(generation_t *, int, int));
+void next_generation(generation_t *current, generation_t *next, int (*neighbourhood)(generation_t *, int, int));
 
 generation_t *copy(generation_t *gen);
 

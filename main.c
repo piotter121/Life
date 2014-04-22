@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
 	const char *new_dir = "created_files";
 	FILE *in = NULL;
 	int (*neighbourhood)(generation_t *, int, int) = Moore_ngbh;
-	generation_t *current, *new;
+	generation_t *current, *new, *tmp;
 	if (argc < 5) {
 		puts(usage);
 		return EXIT_FAILURE;
@@ -71,6 +71,7 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 	current = load_from_file(in);
+	new = init_gen(current->rows, current->cols);
 	if (mkdir(new_dir, S_IRWXU|S_IRGRP|S_IXGRP) != 0) {
 		if (errno == EEXIST) {
 			if (chdir(new_dir) != 0) {
@@ -87,10 +88,7 @@ int main(int argc, char **argv) {
 	save_to_png(current, png_title); 
 	for (a = 1; a <= n; a++) {
 		strcpy(png_title, png_pattern);
-		if ((new = next_generation(current,neighbourhood)) == NULL) {
-			fprintf(stderr, "%s: Nie powiodlo sie przejscie do kolejnej generacji\n", argv[0]);
-			exit(EXIT_FAILURE);
-		}
+		next_generation(current, new, neighbourhood);
 		if (a <= f) {
 			sprintf(number, "%d", a);
 			strcat(png_title, number);
@@ -99,9 +97,12 @@ int main(int argc, char **argv) {
 		}
 		if (a == n && last_to_txt == 1) 
 			save_to_txt(new,txt_pattern);
-		free_gen(current);
+		tmp = current;
 		current = new;
+		new = tmp;
 	}
+	free_gen(current);
+	free_gen(new);
 	if (chdir("..") != 0) 
 		perror("error");
 	exit(EXIT_SUCCESS);	
